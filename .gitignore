@@ -56,4 +56,4 @@ buck-out/
 *.jsbundle
 
 # Script
-o.bat
+*.bat
