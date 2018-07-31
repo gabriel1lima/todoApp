@@ -21,7 +21,7 @@ class TodoForm extends React.Component {
                     <TextInput
                         style={styles.textInput}
                         underlineColorAndroid= 'rgba(0,0,0,0)' 
-                        placeholder="Novo ToDo"
+                        placeholder="Novo À fazer"
                         onChangeText={text => this.props.dispatchSetTodoText(text)} 
                         value={this.props.todo.text}
                     />
