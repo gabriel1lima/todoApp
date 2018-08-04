@@ -6,14 +6,7 @@ let nextId = 1;
 const todoListReducer = (state = [], action) => {
     switch (action.type) {
         case SYNC_TODOS:
-            AsyncStorage.getItem('todos')
-                .then((todos) => {
-                    return [...state, todos];
-                })
-                .catch(() => {
-                    AsyncStorage.setItem('todos', [{}]);
-                    return state;
-                })
+            return [...state, action.todos]
         case ADD_TODO:
             const newTodo = {
                 id: nextId++,

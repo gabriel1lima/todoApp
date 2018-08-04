@@ -1,6 +1,7 @@
 export const SYNC_TODOS = 'SYNC_TODOS';
-export const syncTodos = () => ({
-    type: SYNC_TODOS
+export const syncTodos = todos => ({
+    type: SYNC_TODOS,
+    todos
 })
 
 export const ADD_TODO = 'ADD_TODO';
