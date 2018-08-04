@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { Header, Item, Icon } from 'native-base';
 import { connect } from 'react-redux';
-import { addTodo, setTodoText, updateTodo } from '../actions';
+import { addTodo, setTodoText, updateTodo, syncTodos } from '../actions';
 
 class TodoForm extends React.Component {
     onPress(){
@@ -68,6 +68,7 @@ export default connect(
     {
         dispatchAddTodo: addTodo,
         dispatchSetTodoText: setTodoText,
-        dispatchUpdateTodo: updateTodo
+        dispatchUpdateTodo: updateTodo,
+        dispatchSyncTodos: syncTodos,
     }
 )(TodoForm);

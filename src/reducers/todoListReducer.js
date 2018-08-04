@@ -1,9 +1,19 @@
-import { ADD_TODO, TOOGLE_TODO, UPDATE_TODO, DELETE_TODO } from "../actions";
+import { ADD_TODO, TOOGLE_TODO, UPDATE_TODO, DELETE_TODO, SYNC_TODOS } from "../actions";
+import { AsyncStorage } from 'react-native';
 
 let nextId = 1;
 
 const todoListReducer = (state = [], action) => {
     switch (action.type) {
+        case SYNC_TODOS:
+            AsyncStorage.getItem('todos')
+                .then((todos) => {
+                    return [...state, todos];
+                })
+                .catch(() => {
+                    AsyncStorage.setItem('todos', [{}]);
+                    return state;
+                })
         case ADD_TODO:
             const newTodo = {
                 id: nextId++,
