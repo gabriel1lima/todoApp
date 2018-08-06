@@ -1,12 +1,12 @@
 import { ADD_TODO, TOOGLE_TODO, UPDATE_TODO, DELETE_TODO, SYNC_TODOS } from "../actions";
 import { AsyncStorage } from 'react-native';
 
-let nextId = 1;
+let nextId = 3;
 
 const todoListReducer = (state = [], action) => {
     switch (action.type) {
         case SYNC_TODOS:
-            return [...state, action.todos]
+            return action.todos
         case ADD_TODO:
             const newTodo = {
                 id: nextId++,

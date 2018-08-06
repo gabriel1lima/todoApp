@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, AsyncStorage } from 'react-native';
 import { Header, Item, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { addTodo, setTodoText, updateTodo, syncTodos } from '../actions';
@@ -11,6 +11,30 @@ class TodoForm extends React.Component {
         
         if(this.props.todo.text != '')
             this.props.dispatchAddTodo(this.props.todo.text);
+        
+    }
+    componentDidMount(){
+        const INITIAL_STATE = [
+            {
+                id: 0,
+                text: 'Estudar Redux',
+                done: false
+            },
+            {
+                id: 1,
+                text: 'Estudar React Native',
+                done: false
+            },
+            {
+                id: 2,
+                text: 'Fazer TCC',
+                done: false
+            },
+        ]
+
+        //AsyncStorage.setItem('todos', JSON.stringify(INITIAL_STATE));
+
+        AsyncStorage.getItem('todos').then(response => this.props.dispatchSyncTodos(JSON.parse(response)));
         
     }
 
