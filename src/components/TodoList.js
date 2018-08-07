@@ -31,7 +31,7 @@ class TodoList extends React.Component{
                           
                         : <View style={{alignItems: 'center'}}>
                             <Icon style={styles.icon} name="folder" />
-                            <Text style={{color: 'rgba(0,0,0,0.2)'}}>Nenhum 'À fazer' adicionado</Text>
+                            <Text style={{color: 'rgba(0,0,0,0.2)'}}>Nenhuma 'Tarefa' adicionada</Text>
                           </View>
                 }
 

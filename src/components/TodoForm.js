@@ -14,27 +14,23 @@ class TodoForm extends React.Component {
         
     }
     componentDidMount(){
-        const INITIAL_STATE = [
-            {
-                id: 0,
-                text: 'Estudar Redux',
-                done: false
-            },
-            {
-                id: 1,
-                text: 'Estudar React Native',
-                done: false
-            },
-            {
-                id: 2,
-                text: 'Fazer TCC',
-                done: false
-            },
-        ]
+        // AsyncStorage.removeItem('@TodoApp:todos');
+        // AsyncStorage.removeItem('@TodoApp:todosID');
+        // AsyncStorage.getAllKeys().then(r => console.log(r));
 
-        //AsyncStorage.setItem('todos', JSON.stringify(INITIAL_STATE));
-
-        AsyncStorage.getItem('todos').then(response => this.props.dispatchSyncTodos(JSON.parse(response)));
+        AsyncStorage.multiGet(['@TodoApp:todos','@TodoApp:todosID']).then(response => {
+            if(response[0][1] != null){
+                this.props.dispatchSyncTodos(JSON.parse(response[0][1]));
+            } else {
+                AsyncStorage.multiSet([
+                    ['@TodoApp:todos', JSON.stringify([])], 
+                    ['@TodoApp:todosID', JSON.stringify(1)]
+                ]);
+            }
+            
+            // console.log(JSON.parse(response[0][1]));
+            // console.log(response[1][1]);
+        });
         
     }
 
@@ -45,7 +41,7 @@ class TodoForm extends React.Component {
                     <TextInput
                         style={styles.textInput}
                         underlineColorAndroid= 'rgba(0,0,0,0)' 
-                        placeholder="Novo À fazer"
+                        placeholder="Nova Tarefa"
                         onChangeText={text => this.props.dispatchSetTodoText(text)} 
                         value={this.props.todo.text}
                     />
