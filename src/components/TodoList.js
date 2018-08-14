@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Icon } from 'native-base';
 import { connect } from "react-redux";
 import { toogleTodo, setEditingTodo, deleteTodo } from '../actions';
@@ -11,6 +11,7 @@ class TodoList extends React.Component{
 
     render(){
         const {todos} = this.props;
+        const img = require('../../assets/img/folder.png');
         return(
             <ScrollView contentContainerStyle={{padding: 20}}>
                 {
@@ -30,7 +31,7 @@ class TodoList extends React.Component{
                           </View>
                           
                         : <View style={{alignItems: 'center'}}>
-                            <Icon style={styles.icon} name="folder" />
+                            <Image source={img} />
                             <Text style={{color: 'rgba(0,0,0,0.2)'}}>Nenhuma 'Tarefa' adicionada</Text>
                           </View>
                 }
