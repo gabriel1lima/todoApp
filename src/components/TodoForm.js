@@ -14,10 +14,6 @@ class TodoForm extends React.Component {
         
     }
     componentDidMount(){
-        // AsyncStorage.removeItem('@TodoApp:todos');
-        // AsyncStorage.removeItem('@TodoApp:todosID');
-        // AsyncStorage.getAllKeys().then(r => console.log(r));
-
         AsyncStorage.multiGet(['@TodoApp:todos','@TodoApp:todosID']).then(response => {
             if(response[0][1] != null){
                 this.props.dispatchSyncTodos(JSON.parse(response[0][1]));
@@ -27,9 +23,6 @@ class TodoForm extends React.Component {
                     ['@TodoApp:todosID', JSON.stringify(1)]
                 ]);
             }
-            
-            // console.log(JSON.parse(response[0][1]));
-            // console.log(response[1][1]);
         });
         
     }
