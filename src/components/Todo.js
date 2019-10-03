@@ -2,45 +2,38 @@ import React from 'react';
 import { toogleTodo, setEditingTodo, deleteTodo } from '../actions';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View key={this.props.todo.id} style={styles.buttonListContainer}>
-        <TouchableOpacity
-          onPress={() => this.props.dispatchToogleTodo(this.props.todo.id)}
-          onLongPress={() => this.props.dispatchEditingTodo(this.props.todo)}
-          style={[styles.button, { width: '90%' }]}
+const Todo = (props) => {
+  const dispatch = useDispatch();
+  
+  return (
+    <View key={props.todo.id} style={styles.buttonListContainer}>
+      <TouchableOpacity
+        onPress={() => dispatch(toogleTodo(props.todo.id))}
+        onLongPress={() => dispatch(setEditingTodo(props.todo))}
+        style={[styles.button, { width: '90%' }]}
+      >
+        <Text
+          style={[styles.texto, props.todo.done ? styles.textoLine : null]}
         >
-          <Text
-            style={[
-              styles.texto,
-              this.props.todo.done ? styles.textoLine : null
-            ]}
-          >
-            {todo.done ? (
-              <Icon name="checkbox" style={{ color: 'green' }} />
-            ) : (
-              <Icon name="alert" style={{ color: 'red' }} />
-            )}
-            {' ' + todo.text}
-          </Text>
-        </TouchableOpacity>
+          {todo.done ? (
+            <Icon name="checkbox" style={{ color: 'green' }} />
+          ) : (
+            <Icon name="alert" style={{ color: 'red' }} />
+          )}
+          {' ' + todo.text}
+        </Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => this.props.dispatchDeleteTodo(this.props.todo)}
-        >
-          <Icon style={{ color: 'red', marginLeft: 15 }} name="trash" />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+      <TouchableOpacity
+        onPress={() => dispatch(deleteTodo(props.todo))}
+      >
+        <Icon style={{ color: 'red', marginLeft: 15 }} name="trash" />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   buttonListContainer: {
@@ -75,11 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(
-  null,
-  {
-    dispatchToogleTodo: toogleTodo,
-    dispatchEditingTodo: setEditingTodo,
-    dispatchDeleteTodo: deleteTodo
-  }
-)(Todo);
+export default Todo;
