@@ -1,56 +1,50 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image
-} from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
 import { Icon } from 'native-base';
-import { connect } from 'react-redux';
-import { toogleTodo, setEditingTodo, deleteTodo } from '../actions';
+import { toogleTodo } from '..actions';
+import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
-class TodoList extends React.Component {
-  onPress(todoId) {
-    this.props.dispatchToogleTodo(todoId);
-  }
 
-  render() {
-    const { todos } = this.props;
-    const img = require('../../assets/img/folder.png');
-    return (
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        {todos.length > 0 ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={[styles.texto, styles.textoTitle]}>
-              <Icon style={styles.textoTitle} name="list-box" /> Tarefas |
-            </Text>
-            <Text style={[styles.textoSubTitle]}>
-              <Icon name="checkbox" style={{ color: 'green', fontSize: 20 }} />
-              {' ' + todos.filter(obj => obj.done == true).length}
-            </Text>
-            <Text style={[styles.textoSubTitle]}>
-              <Icon name="alert" style={{ color: 'red', fontSize: 20 }} />
-              {' ' + todos.filter(obj => obj.done == false).length}
-            </Text>
-          </View>
-        ) : (
-          <View style={{ alignItems: 'center' }}>
-            <Image source={img} />
-            <Text style={{ color: 'rgba(0,0,0,0.2)' }}>
-              Nenhuma 'Tarefa' adicionada
-            </Text>
-          </View>
-        )}
+const TodoList = () => {
+  const dispatch = useDispatch();
+  const todos = useSelector(state => state.todos);
+  const img = require('../../assets/img/folder.png');
 
-        {todos.map(todo => (
-          <Todo todo={todo}/>
-        ))}
-      </ScrollView>
-    );
-  }
-}
+  const onPress = todoId => {
+    dispatch(toogleTodo(todoId));
+  };
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 20 }}>
+      {todos.length > 0 ? (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={[styles.texto, styles.textoTitle]}>
+            <Icon style={styles.textoTitle} name="list-box" /> Tarefas |
+          </Text>
+          <Text style={[styles.textoSubTitle]}>
+            <Icon name="checkbox" style={{ color: 'green', fontSize: 20 }} />
+            {' ' + todos.filter(obj => obj.done == true).length}
+          </Text>
+          <Text style={[styles.textoSubTitle]}>
+            <Icon name="alert" style={{ color: 'red', fontSize: 20 }} />
+            {' ' + todos.filter(obj => obj.done == false).length}
+          </Text>
+        </View>
+      ) : (
+        <View style={{ alignItems: 'center' }}>
+          <Image source={img} />
+          <Text style={{ color: 'rgba(0,0,0,0.2)' }}>
+            Nenhuma 'Tarefa' adicionada
+          </Text>
+        </View>
+      )}
+
+      {todos.map(todo => (
+        <Todo todo={todo} />
+      ))}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   texto: {
@@ -101,12 +95,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => {
-  const { todos } = state;
-  return { todos };
-};
-
-export default connect(
-  mapStateToProps,
-  null,
-)(TodoList);
+export default TodoList;
