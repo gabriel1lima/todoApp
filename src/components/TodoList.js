@@ -4,7 +4,7 @@ import { Icon } from 'native-base';
 import { connect } from "react-redux";
 import { toogleTodo, setEditingTodo, deleteTodo } from '../actions';
 
-class TodoList extends React.Component{
+export class TodoList extends React.Component{
     onPress(todoId){
         this.props.dispatchToogleTodo(todoId)
     }
