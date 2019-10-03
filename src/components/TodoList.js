@@ -1,18 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
 import { Icon } from 'native-base';
-import { toogleTodo } from '..actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
 
-const TodoList = () => {
+const TodoList = (props) => {
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todos);
   const img = require('../../assets/img/folder.png');
-
-  const onPress = todoId => {
-    dispatch(toogleTodo(todoId));
-  };
 
   return (
     <ScrollView contentContainerStyle={{ padding: 20 }}>
